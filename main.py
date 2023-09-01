@@ -48,6 +48,6 @@ if __name__ == '__main__':
     
     youtube = get_authenticated_service()
     try:
-        initialize_upload(youtube, 'ruta_del_video.mp4')  # Reemplaza con la ruta de tu video
+        initialize_upload(youtube, 'video.mp4')  # Reemplaza con la ruta de tu video
     except HttpError as e:
         print(f"Ocurrió un error HTTP: {e.resp.status} - {e.content}")
