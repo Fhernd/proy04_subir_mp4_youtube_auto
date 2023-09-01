@@ -9,7 +9,7 @@ from googleapiclient.http import MediaFileUpload
 # Autenticación OAuth 2.0
 def get_authenticated_service():
     flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    credentials = flow.run_console()
+    credentials = flow.run_local_server()
     return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
 
