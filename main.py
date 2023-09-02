@@ -4,7 +4,25 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
+
+class GestorGrabacionObs(FileSystemEventHandler):
+    """
+    Clase que gestiona los eventos de renombrado de archivos.
+    """
+    def on_modified(self, event):
+        """
+        Método que se ejecuta cuando se modifica un archivo.
+        
+        Args:
+            event (FileSystemEvent): Evento de modificación de archivo.
+        """
+        if event.is_directory:
+            return
+        
+        nombre_inicial = event.src_path
 
 # Autenticación OAuth 2.0
 def get_authenticated_service():
