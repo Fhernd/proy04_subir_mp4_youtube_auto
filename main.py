@@ -41,7 +41,6 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         
         print('Archivo creado: %s' % event.src_path)
 
-        # Obtener la extensión del archivo:
         extension = os.path.splitext(event.src_path)[1]
 
         if extension != '.mp4':
@@ -53,8 +52,14 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         except HttpError as e:
             print(f"Ocurrió un error HTTP: {e.resp.status} - {e.content}")
 
-    # Autenticación OAuth 2.0
+    
     def get_authenticated_service(self):
+        """
+        Obtiene un recurso de YouTube autenticado.
+
+        Returns:
+            googleapiclient.discovery.Resource: Recurso de YouTube autenticado.
+        """
         flow = InstalledAppFlow.from_client_secrets_file(self.CLIENT_SECRETS_FILE, self.SCOPES)
         credentials = flow.run_local_server()
         return build(self.API_SERVICE_NAME, self.API_VERSION, credentials=credentials)
