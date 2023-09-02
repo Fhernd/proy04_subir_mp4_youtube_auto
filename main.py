@@ -53,8 +53,14 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         return build(self.API_SERVICE_NAME, self.API_VERSION, credentials=credentials)
 
 
-    # Subir video
     def initialize_upload(self, youtube, filename):
+        """
+        Sube un video a YouTube.
+
+        Args:
+            youtube (googleapiclient.discovery.Resource): Recurso de YouTube.
+            filename (str): Ruta del archivo a subir.
+        """
         media_body = MediaFileUpload(filename, chunksize=-1, resumable=True, mimetype='video/mp4')
         body = {
             'snippet': {
