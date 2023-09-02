@@ -39,7 +39,14 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         if event.is_directory:
             return
         
-        nombre_inicial = event.src_path
+        print('Archivo creado: %s' % event.src_path)
+
+        # Obtener la extensión del archivo:
+        extension = os.path.splitext(event.src_path)[1]
+
+        if extension != '.mp4':
+            print('No es un archivo de video')
+            return
 
         try:
             self.initialize_upload(self.youtube, event.src_path)  # Reemplaza con la ruta de tu video
