@@ -2,6 +2,7 @@ import os
 import sys
 import time
 
+from colorama import init, Fore, Back, Style
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -44,13 +45,13 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         extension = os.path.splitext(event.src_path)[1]
 
         if extension != '.mp4':
-            print('No es un archivo de video')
+            print(Fore.BLACK + Back.YELLOW + 'No es un archivo de video')
             return
 
         try:
             self.initialize_upload(self.youtube, event.src_path)  # Reemplaza con la ruta de tu video
         except HttpError as e:
-            print(f"Ocurrió un error HTTP: {e.resp.status} - {e.content}")
+            print(Fore.RED + 'MENSAJE: ' + f"Ocurrió un error HTTP: {e.resp.status} - {e.content}")
 
     
     def get_authenticated_service(self):
@@ -96,10 +97,12 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
         while response is None:
             status, response = request.next_chunk()
 
-        print(f"Subido video con ID: {response['id']}")
+        print(Back.GREEN + Fore.WHITE + 'Video subido correctamente')
 
 
 if __name__ == "__main__":
+    init(autoreset=True)
+    
     path = sys.argv[1] if len(sys.argv) > 1 else '.'
     
     event_handler = SubidaAutomaticaYouTube()
