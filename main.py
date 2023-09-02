@@ -12,11 +12,17 @@ from watchdog.events import FileSystemEventHandler
 
 
 class SubidaAutomaticaYouTube(FileSystemEventHandler):
+    """
+    Clase que gestiona los eventos de subida automática a YouTube.
+    """
     def __init__(self):
-        CLIENT_SECRETS_FILE = 'credentials.json'
-        SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
-        API_SERVICE_NAME = 'youtube'
-        API_VERSION = 'v3'
+        """
+        Constructor de la clase.
+        """
+        self.CLIENT_SECRETS_FILE = 'credentials.json'
+        self.SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+        self.API_SERVICE_NAME = 'youtube'
+        self.API_VERSION = 'v3'
         
         self.youtube = self.get_authenticated_service()
     
@@ -42,9 +48,9 @@ class SubidaAutomaticaYouTube(FileSystemEventHandler):
 
     # Autenticación OAuth 2.0
     def get_authenticated_service(self):
-        flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file(self.CLIENT_SECRETS_FILE, self.SCOPES)
         credentials = flow.run_local_server()
-        return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+        return build(self.API_SERVICE_NAME, self.API_VERSION, credentials=credentials)
 
 
     # Subir video
